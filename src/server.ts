@@ -1,0 +1,34 @@
+import { ApolloServer } from "apollo-server";
+import "reflect-metadata";
+import { buildSchema } from "type-graphql";
+import { AppointmentsResolver } from "./resolvers/appointments-resolver";
+import path from 'node:path'
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import { DataUserResolver } from "./resolvers/data-user-resolver";
+
+dotenv.config();
+
+async function bootstrap() {
+  const MONGO_URL = process.env.MONGO_URL!;
+
+  await mongoose.connect(MONGO_URL)
+  .then(() => console.log('MongoDB connected'))
+  
+  const schema = await buildSchema({
+    resolvers: [
+      AppointmentsResolver,
+      DataUserResolver,
+
+    ],
+    emitSchemaFile: path.resolve(__dirname, 'schema.gql')
+  })
+  const server = new ApolloServer({
+    schema,
+  })
+  const { url } = await server.listen()
+
+  console.log(`🚀  Server ready at ${url}`);
+}
+
+bootstrap();
