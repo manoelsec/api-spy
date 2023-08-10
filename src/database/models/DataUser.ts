@@ -4,7 +4,10 @@ interface DataUserAttributes {
   ip: string;
   slug: string;
   currentDateTime: string;
-  geoLocation: string;
+  geoLocation: {
+    latitude: number;
+    longitude: number;
+  };
   video: string;
 }
 
@@ -12,7 +15,10 @@ const kittySchema = new Schema<DataUserAttributes>({
   ip: String,
   slug: String,
   currentDateTime: String,
-  geoLocation: String,
+  geoLocation: {
+    latitude: Number,
+    longitude: Number,
+  },
   video: String,
 })
 

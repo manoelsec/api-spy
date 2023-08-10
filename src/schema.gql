@@ -22,7 +22,7 @@ input CreateAppointmentInput {
 
 input CreateDataUserInput {
   currentDateTime: String!
-  geoLocation: String!
+  geoLocation: GeoLocationInput!
   ip: String!
   slug: String!
   video: String!
@@ -34,10 +34,20 @@ type Customer {
 
 type DataUserModel {
   currentDateTime: String!
-  geoLocation: String!
+  geoLocation: GeoLocation!
   ip: String!
   slug: String!
   video: String!
+}
+
+type GeoLocation {
+  latitude: Float!
+  longitude: Float!
+}
+
+input GeoLocationInput {
+  latitude: Float!
+  longitude: Float!
 }
 
 type Mutation {
@@ -48,5 +58,5 @@ type Mutation {
 type Query {
   appointments(slug: String!): AppointmentModel!
   appointmentsAll: [AppointmentModel!]!
-  dataUser: DataUserModel!
+  dataUser(slug: String!): [DataUserModel!]!
 }

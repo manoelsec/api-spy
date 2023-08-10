@@ -1,24 +1,31 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { DataUserModel } from "../dtos/models/data-user-models";
 import { CreateDataUserInput } from "../dtos/inputs/create-data-user-input";
+import { DataUser } from "../database/models/DataUser";
 
 @Resolver(() => DataUserModel)
 export class DataUserResolver {
-  @Query(() => DataUserModel)
-  async dataUser() {
-    const dataUser = {
-      ip: "2198012e",
-      slug: "lkf-ffnfm",
-      currentDateTime: "dhhflkbf",
-      geoLocation: "dkjflhkjfhglkjg",
-      video: "odhfjhkf",
-    }
+  @Query(() => [DataUserModel])
+  async dataUser(@Arg('slug') slug: string) {
+    const dataUsers = await DataUser.find({ slug: slug});
+
+    if (!dataUsers) { throw new Error("Page not found") }
+
+    const dataUser = dataUsers.map((item) => {
+      return {
+        ip: item.ip,
+        slug: item.slug,
+        currentDateTime: item.currentDateTime,
+        geoLocation: item.geoLocation,
+        video: item.video,
+      }
+    });
 
     return dataUser
   }
   @Mutation(() => DataUserModel)
   async createDataUser(@Arg('data') data: CreateDataUserInput) {
-    const dataUser = {
+    const dataUserData = {
       ip: data.ip,
       slug: data.slug,
       currentDateTime: data.currentDateTime,
@@ -26,6 +33,15 @@ export class DataUserResolver {
       video: data.video,
     }
 
-    return dataUser;
+    const dataUser = new DataUser(dataUserData);
+
+    try {
+      dataUser.save();
+
+    } catch (error) {
+
+      console.log(error)
+    }
+    return dataUserData;
   }
 }
