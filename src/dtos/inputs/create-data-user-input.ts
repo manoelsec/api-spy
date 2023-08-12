@@ -13,6 +13,13 @@ export class GeoLocationInput {
 }
 
 @InputType()
+export class VideoInput {
+  @IsString()
+  @Field()
+  url: string;
+}
+
+@InputType()
 export class CreateDataUserInput {
   @IsString()
   @Field()
@@ -30,7 +37,6 @@ export class CreateDataUserInput {
   @Field(() => GeoLocationInput)
   geoLocation: GeoLocationInput;
 
-  @IsString()
-  @Field()
-  video: string
+  @Field(() => VideoInput)
+  video: VideoInput;
 }

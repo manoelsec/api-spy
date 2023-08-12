@@ -8,7 +8,9 @@ interface DataUserAttributes {
     latitude: number;
     longitude: number;
   };
-  video: string;
+  video: {
+    url: string;
+  };
 }
 
 const kittySchema = new Schema<DataUserAttributes>({
@@ -19,7 +21,9 @@ const kittySchema = new Schema<DataUserAttributes>({
     latitude: Number,
     longitude: Number,
   },
-  video: String,
+  video: {
+    url: String,
+  },
 })
 
 export const DataUser = model('DataUser', kittySchema);

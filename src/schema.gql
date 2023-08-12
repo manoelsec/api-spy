@@ -25,7 +25,7 @@ input CreateDataUserInput {
   geoLocation: GeoLocationInput!
   ip: String!
   slug: String!
-  video: String!
+  video: VideoInput!
 }
 
 type Customer {
@@ -35,9 +35,10 @@ type Customer {
 type DataUserModel {
   currentDateTime: String!
   geoLocation: GeoLocation!
+  id: String!
   ip: String!
   slug: String!
-  video: String!
+  video: Video!
 }
 
 type GeoLocation {
@@ -59,4 +60,12 @@ type Query {
   appointments(slug: String!): AppointmentModel!
   appointmentsAll: [AppointmentModel!]!
   dataUser(slug: String!): [DataUserModel!]!
+}
+
+type Video {
+  url: String!
+}
+
+input VideoInput {
+  url: String!
 }

@@ -11,8 +11,10 @@ export class DataUserResolver {
 
     if (!dataUsers) { throw new Error("Page not found") }
 
+
     const dataUser = dataUsers.map((item) => {
       return {
+        id: item._id,
         ip: item.ip,
         slug: item.slug,
         currentDateTime: item.currentDateTime,

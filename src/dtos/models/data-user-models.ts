@@ -1,4 +1,4 @@
-import { IsNumber } from "class-validator";
+import { IsNumber, IsString } from "class-validator";
 import { Field, ObjectType } from "type-graphql";
 
 @ObjectType()
@@ -11,7 +11,16 @@ export class GeoLocation {
 }
 
 @ObjectType()
+export class Video {
+  @Field()
+  url: string;
+}
+
+@ObjectType()
 export class DataUserModel {
+  @Field()
+  id: string;
+  
   @Field()
   ip: string;
 
@@ -25,5 +34,5 @@ export class DataUserModel {
   geoLocation: GeoLocation;
 
   @Field()
-  video: string
+  video: Video;
 }
